@@ -1,0 +1,41 @@
+<div id="admin-content">
+  <div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="admin-heading">Modify User Details</h1>
+        </div>
+        <div class="col-md-6 mx-auto">
+        <div class="card">
+          <h5 class="card-header">Update User</h5>
+          <div class="card-body">
+            <!-- Form Start -->
+            <form action="/admin/update-user/<%= user.id %>"  method ="POST" autocomplete="off">
+              <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="fullname" value="<%= user.fullname %>" class="form-control" placeholder="Full Name" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">User Name</label>
+                <input type="text" name="username" value="<%= user.username %>" class="form-control" placeholder="Username" disabled>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Password">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">User Role</label>
+                <select class="form-control" name="role" >
+                  <option value="author" <%= user.role == 'author' ? 'selected' : '' %> >Author</option>
+                  <option value="admin" <%= user.role == 'admin' ? 'selected' : '' %>>Administrator</option>
+                </select>
+              </div>
+              <input type="submit" name="save" class="btn btn-primary" value="Update" required />
+            </form>
+            <!-- Form End-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

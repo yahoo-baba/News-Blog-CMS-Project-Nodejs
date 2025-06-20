@@ -1,0 +1,39 @@
+<div id="admin-content">
+      <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+            <h1 class="admin-heading">Update Article</h1>
+        </div>
+        <div class="col-md-8 mx-auto">
+          <div class="card">
+            <h5 class="card-header">Update Article</h5>
+            <div class="card-body">
+              <!-- Form -->
+              <form action="" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="article_title" class="form-label">Title</label>
+                    <input type="text" name="title" id="article_title" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="mb-3">
+                    <label for="summernote" class="form-label">Description</label>
+                    <textarea name="content" id="summernote" class="form-control" rows="5"  required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="article_category" class="form-label">Category</label>
+                    <select name="category" id="article_category" class="form-control">
+                        <option value="" selected> Select Category</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="article_image" class="form-label">Article image</label>
+                    <input type="file" name="image" id="article_image" class="form-control" required>
+                </div>
+                <input type="submit" name="submit" class="btn btn-primary" value="Update" />
+              </form>
+              <!--/Form -->
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>

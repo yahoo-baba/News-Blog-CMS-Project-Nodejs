@@ -1,0 +1,41 @@
+<div id="admin-content">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-12">
+                  <h1 class="admin-heading">Add User</h1>
+              </div>
+              <div class="col-md-6 mx-auto">
+                <div class="card">
+                  <h5 class="card-header">Add New User</h5>
+                  <div class="card-body">
+                    <!-- Form Start -->
+                    <form  action="/admin/add-user" method ="POST" autocomplete="off">
+                      <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="fullname" class="form-control" placeholder="Full Name" required>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Name</label>
+                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                      </div>
+
+                      <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Password" required>
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">User Role</label>
+                        <select class="form-control" name="role" >
+                          <option value="author">Author</option>
+                          <option value="admin">Administrator</option>
+                        </select>
+                      </div>
+                      <input type="submit"  name="save" class="btn btn-primary" value="Save" required />
+                    </form>
+                    <!-- Form End-->
+                  </div>
+                </div>
+              </div>
+           </div>
+       </div>
+   </div>

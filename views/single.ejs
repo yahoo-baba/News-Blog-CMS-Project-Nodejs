@@ -1,0 +1,62 @@
+<!-- post-container -->
+    <div class="post-container">
+      <div class="post-content single-post">
+        <h3>Lorem ipsum dolor sit amet, consectetur</h3>
+        <div class="post-information">
+          <span>
+            <i class="fa fa-tags" aria-hidden="true"></i>
+            Html
+          </span>
+          <span>
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <a href='author.html'>Admin</a>
+          </span>
+          <span>
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+            01 Nov, 2025
+          </span>
+        </div>
+        <img class="single-feature-image" src="images/post_1.jpg" alt=""/>
+        <p class="description">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        </p>
+      </div>
+    </div>
+    <!-- /post-container -->
+
+    <!-- Comments Section -->
+    <div class="comments-section mt-5">
+      <h3>Comments</h3>
+      
+      <!-- Comment Form -->
+      <div class="card mb-4">
+          <div class="card-body">
+              <form action="/article/1/comment" method="POST">
+                  <div class="mb-3">
+                      <label class="form-label">Name</label>
+                      <input type="text" class="form-control" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Email</label>
+                      <input type="email" class="form-control" name="email" required>
+                  </div>
+                  <div class="mb-3">
+                      <label class="form-label">Comment</label>
+                      <textarea class="form-control" name="content" rows="3" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Submit Comment</button>
+              </form>
+          </div>
+      </div>
+
+      <!-- Display Comments -->
+      <div class="comments-list">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">User Name</h6>
+            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam est laboriosam rerum saepe odit exercitationem earum sequi in ipsum culpa!</p>
+            <small class="text-muted">Posted on 10-10-2020</small>
+          </div>
+        </div>
+      </div>
+  </div>

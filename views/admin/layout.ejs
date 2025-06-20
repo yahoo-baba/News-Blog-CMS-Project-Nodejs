@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>ADMIN Panel</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="/css/font-awesome.css">
+    <!-- Custom stlylesheet -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <%- typeof tabulatorCSS == 'undefined' ? '' : tabulatorCSS %> 
+  </head>
+  <body>
+    <!-- HEADER -->
+    <div id="header-admin">
+      <!-- container -->
+      <div class="container">
+          <!-- row -->
+          <div class="row">
+            <!-- LOGO -->
+            <div class="col-md-2 me-auto">
+               <a href="/admin/dashboard"><img class="logo" src="/images/news.jpg" alt="Logo"></a>
+            </div>
+            <!-- /LOGO -->
+            <!-- LOG-Out -->
+            <div class="col-md-2">
+                <a href="/admin/logout" class="admin-logout">
+                  <i class="fa fa-sign-out"></i> logout
+                </a>
+            </div>
+            <!-- /LOG-Out -->
+          </div>
+      </div>
+    </div>
+    <!-- /HEADER -->
+    <!-- Menu Bar -->
+    <div id="admin-menubar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <ul class="admin-menu">
+              <li>
+                <a href="/admin/dashboard">Home</a>
+              </li>
+              <li>
+                <a href="/admin/article">Article</a>
+              </li>
+            <% if(role === 'admin') { %>
+              <li>
+                <a href="/admin/category">Category</a>
+              </li>
+              <li>
+                <a href="/admin/users">Users</a>
+              </li>
+            <% } %>  
+              <li>
+                <a href="/admin/comments">Comments</a>
+              </li>
+            <% if(role === 'admin') { %>  
+              <li>
+                <a href="/admin/settings">Settings</a>
+              </li>
+            <% } %>  
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Menu Bar -->
+
+  <%- body %> 
+<!-- Footer -->
+<div id ="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span>© Copyright 2025 News | Powered by <a href="http://yahubaba.com/">Yahu Baba</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Footer -->
+
+</body>
+</html>
