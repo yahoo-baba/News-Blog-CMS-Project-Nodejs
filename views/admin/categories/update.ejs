@@ -9,14 +9,14 @@
               <h5 class="card-header">Update Category</h5>
               <div class="card-body">
                 <!-- Form Start -->
-                <form action="" method="POST" autocomplete="off">
+                <form action="/admin/update-category/<%= category.id %>" method="POST" autocomplete="off">
                   <div class="mb-3">
                     <label for="" class="form-label">Category Name</label>
-                    <input type="text" name="cat" class="form-control" placeholder="Category Name" required>
+                    <input type="text" name="name" value="<%= category.name %>" class="form-control" placeholder="Category Name" required>
                   </div>
                   <div class="mb-3">
                     <label for="" class="form-label">Description</label>
-                    <textarea name="description" class="form-control"></textarea>
+                    <textarea name="description" class="form-control"><%= category.description %></textarea>
                   </div>
                   <input type="submit" name="save" class="btn btn-primary" value="Update" required />
                 </form>
