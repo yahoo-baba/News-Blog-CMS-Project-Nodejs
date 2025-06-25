@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const isLoggedIn = require('../middleware/isLoggedin');
+const isAdmin = require('../middleware/isAdmin');
+const upload = require('../middleware/multer');
 
 const articleController = require('../controllers/articleController');
 const categoryController = require('../controllers/categoryController');
 const commentController = require('../controllers/commentController');
-const UserController = require('../controllers/UserController');
-const isLoggedIn = require('../middleware/isLoggedin')
-const isAdmin = require('../middleware/isAdmin')
+const UserController = require('../controllers/userController');
 
 //Login Routes
 router.get('/', UserController.loginPage);
 router.post('/index', UserController.adminLogin);
-router.get('/logout', UserController.logout);
+router.get('/logout',  isLoggedIn, UserController.logout);
 router.get('/dashboard', isLoggedIn, UserController.dashboard);
 router.get('/settings', isLoggedIn, isAdmin, UserController.settings);
 
@@ -34,9 +35,9 @@ router.delete('/delete-category/:id', isLoggedIn, isAdmin, categoryController.de
 //Article CRUD Routes
 router.get('/article', isLoggedIn, articleController.allArticle);
 router.get('/add-article', isLoggedIn, articleController.addArticlePage);
-router.post('/add-article', isLoggedIn, articleController.addArticle);
+router.post('/add-article', isLoggedIn, upload.single('image') ,articleController.addArticle);
 router.get('/update-article/:id', isLoggedIn, articleController.updateArticlePage);
-router.post('/update-article/:id', isLoggedIn, articleController.updateArticle);
+router.post('/update-article/:id', isLoggedIn, upload.single('image') ,articleController.updateArticle);
 router.delete('/delete-article/:id', isLoggedIn, articleController.deleteArticle);
 
 //Comment Routes
