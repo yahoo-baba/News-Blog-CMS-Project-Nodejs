@@ -8,18 +8,30 @@
                   <div class="card">
                     <h5 class="card-header">Settings</h5>
                     <div class="card-body">
-                      <form action="" method="POST" enctype="multipart/form-data">
+                      <form action="/admin/save-settings" method="POST" enctype="multipart/form-data">
                           <div class="mb-3">
-                              <label for="article_title" class="form-label">Website Title</label>
-                              <input type="text" name="article_title" class="form-control" autocomplete="off" required="">
+                              <label for="website_title" class="form-label">Website Title</label>
+                              <% if(!settings.website_title || settings.website_title.trim() === '') { %> 
+                              <input type="text" name="website_title" class="form-control" autocomplete="off" required="">
+                              <% }else{ %>
+                                <input type="text" value="<%= settings.website_title %>" name="website_title" class="form-control" autocomplete="off" required="">
+                              <% } %> 
                           </div>
                           <div class="mb-3">
                               <label for="website_logo" class="form-label">Upload Logo</label>
-                              <input type="file" name="website_logo" class="form-control" required="">
+                              <br>
+                              <% if(settings.website_logo && settings.website_logo.trim() !== '') { %>
+                                <img src="/uploads/<%= settings.website_logo %>" class="w-25 mb-3">
+                              <% } %>     
+                              <input type="file" name="website_logo" class="form-control">
                           </div>
                           <div class="mb-3">
                               <label for="footer_description" class="form-label">Footer Description</label>
-                              <input type="text" name="footer_description" class="form-control" autocomplete="off" required="">
+                              <% if(!settings.footer_description || settings.footer_description.trim() === '') { %> 
+                                <input type="text" name="footer_description" class="form-control" autocomplete="off" required="">
+                              <% }else{ %>
+                                <input type="text" value="<%= settings.footer_description %>" name="footer_description" class="form-control" autocomplete="off" required="">
+                              <% } %> 
                           </div>
                           
                           <input type="submit" name="submit" class="btn btn-primary" value="Save" required="">

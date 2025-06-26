@@ -2,6 +2,9 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const userModel = require('../models/User');
+const newsModel = require('../models/News');
+const categoryModel = require('../models/Category');
+const settingModel = require('../models/Setting');
 
 dotenv.config()
 
@@ -39,13 +42,63 @@ const logout = async (req,res) => {
   res.redirect('/admin/')
  }
 
-const dashboard = async (req,res) => { 
-  res.render('admin/dashboard', { role: req.role, fullname: req.fullname })
+const dashboard = async (req, res) => {
+  try {
+    let articleCount;
+    if(req.role == 'author'){
+      articleCount = await newsModel.countDocuments({ author: req.id });
+    }else{
+      articleCount = await newsModel.countDocuments();
+    }
+   
+    const categoryCount = await categoryModel.countDocuments();
+    const userCount = await userModel.countDocuments();
+
+    res.render('admin/dashboard', { 
+      role: req.role, 
+      fullname: req.fullname,
+      articleCount,
+      categoryCount,
+      userCount 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 }
 
+
 const settings = async (req,res) => { 
-  res.render('admin/settings', { role: req.role })
+  try {
+    const settings = await settingModel.findOne()
+    res.render('admin/settings', { role: req.role , settings})
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 }
+
+const saveSettings = async (req, res) => {
+  const { website_title, footer_description } = req.body;
+  const website_logo = req.file?.filename;
+
+  try {
+    const settings = await settingModel.findOneAndUpdate(
+      {},
+      { website_title, website_logo, footer_description },
+      { new: true, upsert: true }
+    );
+
+    res.redirect('/admin/settings');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
+  
+}
+
+
+
 
 const allUser = async (req,res) => { 
   const users = await userModel.find()
@@ -126,5 +179,6 @@ module.exports = {
   updateUser,
   deleteUser,
   dashboard,
-  settings
+  settings,
+  saveSettings
 }

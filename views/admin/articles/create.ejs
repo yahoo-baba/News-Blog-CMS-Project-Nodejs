@@ -9,7 +9,7 @@
             <h5 class="card-header">Add New Article</h5>
             <div class="card-body">
               <!-- Form -->
-              <form action="" method="POST" enctype="multipart/form-data">
+              <form action="/admin/add-article" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="article_title" class="form-label">Title</label>
                     <input type="text" name="title" id="article_title" class="form-control" autocomplete="off" required>
@@ -21,7 +21,10 @@
                 <div class="mb-3">
                     <label for="article_category" class="form-label">Category</label>
                     <select name="category" id="article_category" class="form-control">
-                        <option value="" selected> Select Category</option>
+                        <option selected disabled> Select Category</option>
+                        <% categories.forEach((category) => { %>
+                            <option value="<%= category.id %>"><%= category.name %></option>
+                        <% }); %>
                     </select>
                 </div>
                 <div class="mb-3">
@@ -37,3 +40,19 @@
       </div>
     </div>
   </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $('#summernote').summernote({
+      placeholder: 'Start typing...',
+      tabsize: 2,
+      height: 200
+    });
+  });
+</script>  
+
+
+<%- contentFor('summernoteCSS') %>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css" rel="stylesheet">

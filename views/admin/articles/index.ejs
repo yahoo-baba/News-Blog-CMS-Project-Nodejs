@@ -5,110 +5,61 @@
                   <h1 class="admin-heading"><i class="fa fa-file-text"></i> All Articles</h1>
               </div>
               <div class="col-md-2">
-                  <a class="add-new" href="add-article.html">Add New Article</a>
+                  <a class="add-new" href="/admin/add-article">Add New Article</a>
               </div>
               <div class="col-md-12">
-                  <table class="content-table" style="background: white;">
-                      <thead>
-                        <th>S.No.</th>
-                        <th>Title</th>
-                        <th>Category</th>
-                        <th>Date</th>
-                        <th>Author</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td class='id'>1</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>2</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>3</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>4</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>5</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>6</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>7</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                          <tr>
-                              <td class='id'>8</td>
-                              <td>Lorem ipsum dolor sit amet</td>
-                              <td>Html</td>
-                              <td>01 Nov, 2025</td>
-                              <td>Admin</td>
-                              <td class='edit'><a href='update-article.html'><i class='fa fa-edit'></i></a></td>
-                              <td class='delete'><a href='delete-article.html'><i class='fa fa-trash-o'></i></a></td>
-                          </tr>
-                      </tbody>
-                  </table>
-                  <nav aria-label="...">
-                    <ul class="pagination">
-                      <li class="page-item disabled">
-                        <a class="page-link">Previous</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item active">
-                        <a class="page-link" href="#" aria-current="page">2</a>
-                      </li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                      </li>
-                    </ul>
-                  </nav>
-              </div>
+                 <div id="articlesTable"></div>
+              </div>    
           </div>
       </div>
   </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/tabulator-tables@6.0.0/dist/js/tabulator.min.js"></script>
+
+<script>
+const tableData = <%- JSON.stringify(articles) %>
+
+var table = new Tabulator("#articlesTable", {
+    data: tableData,
+    layout:"fitColumns",      
+    pagination:true,
+    paginationSize:10,
+    paginationSizeSelector:[5,10,25,50,100],
+    columns: [
+        { title: "S.No.", formatter:"rownum", width:100, hozAlign:"center" },
+        { title: "Title", field: "title", headerFilter:"input" },
+        { title: "Category", field: "category.name", headerFilter:"input" },
+        { title: "Date", field: "createdAt", headerFilter:"input", 
+        formatter:function(cell, formatterParams, onRendered){
+          var date = new Date(cell.getValue());
+          return date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/\s/g, '-');
+        } },
+        { title: "Author", field: "author.fullname", headerFilter:"input" },
+        { title: "Actions", formatter: function(cell, formatterParams, onRendered) {
+            return `<a href="/admin/update-article/${cell.getData()._id}" class="btn btn-sm btn-success">Edit</a>
+                    <button class="btn btn-sm btn-danger delete-article" onclick="deleteArticle('${cell.getData()._id}')">Delete</button>`;
+        }}
+    ],
+});
+
+// Delete User
+async function deleteArticle(id){
+  try {
+    if (confirm("Are you sure you want to delete this article?")) {
+      const response = await fetch(`/admin/delete-article/${id}`, {
+        method: 'delete'
+      });
+      if(response.ok){
+        window.location.reload();
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
+</script>
+
+<%- contentFor('tabulatorCSS') %>
+<link href="https://unpkg.com/tabulator-tables@6.0.0/dist/css/tabulator.min.css" rel="stylesheet">
+<link href="/css/tabulator_bootstrap5.min.css" rel="stylesheet">
