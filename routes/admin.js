@@ -44,4 +44,44 @@ router.delete('/delete-article/:id', isLoggedIn, articleController.deleteArticle
 //Comment Routes
 router.get('/comments', isLoggedIn, commentController.allComments);
 
+// 404 Middleware
+router.use(isLoggedIn,(req, res, next) => { 
+  res.status(404).render('admin/404',{
+    message: 'Page not found',
+    role: req.role 
+  })
+});
+
+// 500 Error Handler
+router.use(isLoggedIn, (err, req, res, next) => { 
+  console.error(err.stack);
+  const status = err.status || 500;
+  let view;
+  switch (status) {
+    case 401:
+      view = 'admin/401';
+      break;
+    case 404:
+      view = 'admin/404';
+      break;
+    case 500:
+      view = 'admin/500';
+      break;
+    default:
+      view = 'admin/500';
+  }
+  res.status(status).render(view,{
+    message: err.message || 'Something went wrong',
+    role: req.role 
+  })
+});
+
+// router.use(isLoggedIn, (err, req, res, next) => { 
+//   console.error(err.stack);
+//   res.status(500).render('admin/500',{
+//     message: err.message || 'Internal Server Error',
+//     role: req.role 
+//   })
+// });
+
 module.exports = router;
