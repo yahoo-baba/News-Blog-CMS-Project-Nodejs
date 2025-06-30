@@ -1,0 +1,9 @@
+<% if(errors.length > 0) { %> 
+  <div class="alert alert-danger mt-3">
+    <ul>
+      <% errors.forEach(function(error) { %>
+        <li><%= error.msg %></li>
+      <% }); %>
+    </ul>
+  </div>
+<% } %> 

@@ -1,20 +1,32 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
+const { validationResult } = require('express-validator')
 const userModel = require('../models/User');
 const newsModel = require('../models/News');
 const categoryModel = require('../models/Category');
 const settingModel = require('../models/Setting');
+const createError = require('../utils/error-message')
 
 dotenv.config()
 
 const loginPage = async (req,res) => {
   res.render('admin/login',{
-    layout: false
+    layout: false,
+    errors: 0
   })
  }
 
 const adminLogin = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    // return res.status(400).json({ errors: errors.array() });
+    return res.render('admin/login',{
+      layout: false,
+      errors: errors.array()
+    })
+  }
+
   const { username, password } = req.body;
   try {
     const user = await userModel.findOne({ username });
@@ -98,10 +110,17 @@ const allUser = async (req,res) => {
   res.render('admin/users', { users, role: req.role })
 }
 const addUserPage = async (req,res) => {
-  res.render('admin/users/create' , { role: req.role })
+  res.render('admin/users/create' , { role: req.role, errors: 0 })
  }
 
-const addUser = async (req,res) => { 
+const addUser = async (req,res) => {
+  const errors = validationResult(req); 
+   if (!errors.isEmpty()) {
+    return res.render('admin/users/create',{
+      role: req.role,
+      errors: errors.array()
+    })
+  }
   await userModel.create(req.body)
   res.redirect('/admin/users')
 }
@@ -113,7 +132,7 @@ const updateUserPage = async (req,res,next) => {
     if(!user){
       return next(createError('User not found', 404));
     }
-    res.render('admin/users/update', { user , role:req.role })
+    res.render('admin/users/update', { user , role:req.role, errors:0 })
   } catch (error) {
     next(error)
   }
@@ -122,6 +141,15 @@ const updateUserPage = async (req,res,next) => {
 
 const updateUser = async (req,res,next) => {
   const id = req.params.id
+
+  const errors = validationResult(req); 
+   if (!errors.isEmpty()) {
+    return res.render('admin/users/update',{
+      user:req.body,
+      role: req.role,
+      errors: errors.array()
+    })
+  }
   const { fullname, password, role } = req.body
   try {
     const user = await userModel.findById(id)
