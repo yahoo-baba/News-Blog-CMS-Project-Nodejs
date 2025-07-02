@@ -1,4 +1,5 @@
 const categoryModel = require('../models/Category');
+const newsModel = require('../models/News')
 const createError = require('../utils/error-message')
 const { validationResult } = require('express-validator')
 
@@ -54,10 +55,15 @@ const updateCategory = async (req,res,next) => {
       })
     }
   try {
-    const category = await categoryModel.findByIdAndUpdate(id, req.body);
-    if(!category){
+    const category = await categoryModel.findById(id);
+    if (!category) {
       return next(createError('Category not found', 404));
     }
+
+    category.name = req.body.name;
+    category.description = req.body.description;
+
+    await category.save();
     res.redirect('/admin/category');
   } catch (error) {
     // res.status(400).send(error);
@@ -68,11 +74,18 @@ const updateCategory = async (req,res,next) => {
 const deleteCategory = async (req,res,next) => {
   const id = req.params.id;
   try {
-    const category = await categoryModel.findByIdAndDelete(id);
-    if(!category){
+    const category = await categoryModel.findById(id);
+    if (!category) {
       return next(createError('Category not found', 404));
     }
-   res.json({success:true})
+
+    const article = await newsModel.findOne({ category: id });
+    if (article) {
+      return res.status(400).json({ success: false, message: 'Category is associated with an article' });
+    }
+
+    await category.deleteOne();
+    res.json({ success: true });
   } catch (error) {
     // res.status(400).send(error);
     next(error)

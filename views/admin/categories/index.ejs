@@ -47,6 +47,11 @@ async function deleteCategory(id){
       if(response.ok){
         window.location.reload();
       }
+
+      if(response.status == 400){
+        const data = await response.json();
+        alert(data.message);
+      }
     }
   } catch (error) {
     console.log(error);
@@ -56,4 +61,3 @@ async function deleteCategory(id){
 
 <%- contentFor('tabulatorCSS') %>
 <link href="https://unpkg.com/tabulator-tables@6.0.0/dist/css/tabulator.min.css" rel="stylesheet">
-<link href="/css/tabulator_bootstrap5.min.css" rel="stylesheet">
