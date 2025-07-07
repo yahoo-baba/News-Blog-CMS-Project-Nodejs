@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>News</title>
+    <title>
+      <% if(settings.website_title && settings.website_title.trim() !== '') { %>
+        <%= settings.website_title %>
+      <% } else { %>
+        News
+      <% } %>
+    </title>
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome Icon -->
@@ -21,7 +27,11 @@
         <div class="row justify-content-center">
             <!-- LOGO -->
             <div class="col-md-3">
+              <% if(settings.website_logo && settings.website_logo.trim() !== '') { %>
+                <a href="/" id="logo"><img src="/uploads/<%= settings.website_logo %>" alt="Logo" /></a>
+              <% } else { %>
                 <a href="/" id="logo"><img src="/images/news.jpg" alt="Logo" /></a>
+              <% } %>
             </div>
             <!-- /LOGO -->
         </div>
@@ -61,7 +71,12 @@
       <div class="container">
           <div class="row">
               <div class="col-md-12">
+                <% if(settings.footer_description && settings.footer_description.trim() !== '') { %>
+                  <span><%= settings.footer_description %></span>
+                <% } else { %>
                   <span>© Copyright 2025 News | Powered by <a href="http://www.yahubaba.com/">Yahu Baba</a></span>
+                <% } %>
+                  
               </div>
           </div>
       </div>
