@@ -1,3 +1,4 @@
+  <% news = paginatedNews.data %>
   <% news.forEach(function(article) { %>
       <div class="post-content">
           <div class="row">
@@ -31,18 +32,39 @@
       </div>
   <% }); %>
 
+  <% 
+      function buildQuery(query, page) {
+        const params = new URLSearchParams(query);
+        params.set('page', page);
+        return '?' + params.toString();
+      }
+  %> 
+
   <nav>
     <ul class="pagination">
-      <li class="page-item disabled">
-        <a class="page-link">Previous</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item active">
-        <a class="page-link" href="#" aria-current="page">2</a>
-      </li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#">Next</a>
-      </li>
+      <% if(paginatedNews.hasPrevPage) { %>
+        <li class="page-item">
+          <a class="page-link" href="<%= buildQuery(query, paginatedNews.prevPage) %>">Previous</a>
+        </li>
+      <% } else { %>
+        <li class="page-item disabled">
+          <a class="page-link">Previous</a>
+        </li>
+      <% } %>
+      <% for(let i = 1; i <= paginatedNews.totalPages; i++) { %>
+        <li class="page-item <%= (i === paginatedNews.currentPage) ? 'active' : '' %>">
+          <a class="page-link" href="<%= buildQuery(query, i) %>"><%= i %></a>
+        </li>
+      <% } %>
+      <% if(paginatedNews.hasNextPage) { %>
+        <li class="page-item">
+          <a class="page-link" href="<%= buildQuery(query, paginatedNews.nextPage) %>">Next</a>
+        </li>
+      <% } else { %>
+        <li class="page-item disabled">
+          <a class="page-link">Next</a>
+        </li>
+      <% } %>
     </ul>
   </nav>
+
