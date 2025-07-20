@@ -24,6 +24,8 @@ const commentSchema = new mongoose.Schema({
         default: 'pending',
         required: true
     }
+}, {
+    timestamps: true
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

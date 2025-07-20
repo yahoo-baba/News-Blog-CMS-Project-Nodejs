@@ -18,7 +18,7 @@
         </div>
         <img class="single-feature-image" src="/uploads/<%= singleNews.image %>" alt=""/>
         <div>
-          <%= singleNews.content %>
+          <%- singleNews.content %>
         </div>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <!-- Comment Form -->
       <div class="card mb-4">
           <div class="card-body">
-              <form action="/article/1/comment" method="POST">
+              <form action="/single/<%= singleNews._id %>/comment" method="POST">
                   <div class="mb-3">
                       <label class="form-label">Name</label>
                       <input type="text" class="form-control" name="name" required>
@@ -51,12 +51,14 @@
 
       <!-- Display Comments -->
       <div class="comments-list">
+        <% comments.forEach(function(comment) { %>
         <div class="card mb-3">
           <div class="card-body">
-            <h6 class="card-subtitle mb-2 text-muted">User Name</h6>
-            <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam est laboriosam rerum saepe odit exercitationem earum sequi in ipsum culpa!</p>
-            <small class="text-muted">Posted on 10-10-2020</small>
+            <h6 class="card-subtitle mb-2 text-muted"><%= comment.name %></h6>
+            <p class="card-text"><%= comment.content %></p>
+            <small class="text-muted">Posted on <%= new Date(comment.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' }) %></small>
           </div>
         </div>
+        <% }); %>
       </div>
   </div>

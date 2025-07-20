@@ -32,6 +32,8 @@ const addArticlePage = async (req,res) => {
 }
 
 const addArticle = async (req,res,next) => { 
+  console.log(req.body, req.file)
+
   const errors = validationResult(req); 
        if (!errors.isEmpty()) {
         const categories = await categoryModel.find();
